@@ -3,3 +3,4 @@ pdf2image
 opencv-python
 numpy
 coverage
+skimage
