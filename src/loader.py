@@ -28,6 +28,12 @@ class Loader:
             self.low_threshold = low_threshold
         if self._is_valid(high_threshold):
             self.high_threshold = high_threshold
+    
+    def __str__(self) -> str:
+        s = "\nLoader\n==========\n"
+        s += "low_threshold = {}\n".format(self.low_threshold)
+        s += "high_threshold = {}\n".format(self.high_threshold)
+        return s
 
     def _is_valid(self, threshold: tuple) -> bool:
         if type(threshold) is not tuple:

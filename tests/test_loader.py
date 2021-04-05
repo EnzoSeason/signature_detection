@@ -10,6 +10,13 @@ class TestLoader(unittest.TestCase):
     def test_loader_init(self):
         loader = Loader()
         self.assertEqual(loader.low_threshold, (0, 0, 250))
+    
+    def test_str(self):
+        loader = Loader()
+        s = "\nLoader\n==========\n"
+        s += "low_threshold = {}\n".format(loader.low_threshold)
+        s += "high_threshold = {}\n".format(loader.high_threshold)
+        self.assertEqual(str(loader), s)
 
     def test_is_valid(self):
         low_threshold = ""
