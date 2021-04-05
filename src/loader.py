@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from fileHelper import FileHelper
+from src.filehelper import FileHelper
 
 
 class Loader:
@@ -30,7 +30,7 @@ class Loader:
 
     def _is_valid(self, threshold: tuple) -> bool:
         if type(threshold) is not tuple:
-            raise Exception("The threshold must have a tuple.")
+            raise Exception("The threshold must be a tuple.")
         if len(threshold) != 3:
             raise Exception("The threshold must have 3 item (h, s, v).")
         for item in threshold:
@@ -48,17 +48,19 @@ class Loader:
             raise Exception("Document should be jpg/jpeg, png or pdf.")
 
         if self.document_type == "IMAGE":
-            loader = ImageLoader(self.low_threshold, self.high_threshold)
+            loader = _ImageWorker(self.low_threshold, self.high_threshold)
             return [loader.get_image_mask(path)]
 
         if self.document_type == "PDF":
-            loader = PdfLoader(self.low_threshold, self.high_threshold)
+            loader = _PdfWorker(self.low_threshold, self.high_threshold)
             return loader.get_pdf_masks(path)
 
-        return []
 
+class _ImageWorker():
+    def __init__(self, low_threshold: tuple, high_threshold: tuple) -> None:
+        self.low_threshold = low_threshold
+        self.high_threshold = high_threshold
 
-class ImageLoader(Loader):
     def make_mask(self, image):
         """
         create a mask that the bright parts are marked as 255, the rest as 0.
@@ -72,7 +74,9 @@ class ImageLoader(Loader):
         frame_threshold: numpy array
         """
         frame_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        frame_threshold = cv2.inRange(frame_HSV, self.low_threshold, self.high_threshold)
+        frame_threshold = cv2.inRange(
+            frame_HSV, self.low_threshold, self.high_threshold
+        )
         return frame_threshold
 
     def get_image_mask(self, path: str):
@@ -80,7 +84,10 @@ class ImageLoader(Loader):
         return self.make_mask(image)
 
 
-class PdfLoader(ImageLoader):
+class _PdfWorker(_ImageWorker):
+    def __init__(self, low_threshold, high_threshold):
+        super().__init__(low_threshold, high_threshold)
+
     def get_pdf_masks(self, path: str) -> list:
         """
         create the mask that the bright parts are marked as 255, the rest as 0,
