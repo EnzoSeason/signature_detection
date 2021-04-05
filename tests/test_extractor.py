@@ -1,7 +1,9 @@
 import sys
 import unittest
 
-sys.path.append('..')
+import numpy as np
+
+sys.path.append("..")
 
 from src.extractor import Extractor
 from src.loader import Loader
@@ -16,7 +18,7 @@ class TestExtractor(unittest.TestCase):
         self.assertEqual(extractor.outlier_bias, 100)
         self.assertEqual(extractor.amplfier, 10)
         self.assertEqual(extractor.min_area_size, 10)
-    
+
     def test_str(self):
         extractor = Extractor()
         s = "\nExtractor\n==========\n"
@@ -28,7 +30,7 @@ class TestExtractor(unittest.TestCase):
         s += "min_area_size = 10 (pixels)\n"
         s += "> min_area_size is used to calculate average_region_size.\n"
         self.assertEqual(str(extractor), s)
-    
+
     def test_extract(self):
         path = TEST_IMAGE_PATH
         loader = Loader()
@@ -36,4 +38,6 @@ class TestExtractor(unittest.TestCase):
 
         extractor = Extractor()
         labeled_mask = extractor.extract(mask)
-        self.assertTrue(len(labeled_mask))
+        mask_list = list(np.unique(labeled_mask))
+        self.assertEqual(mask_list[0], 0)
+        self.assertEqual(mask_list[1], 255)
