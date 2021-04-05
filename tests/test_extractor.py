@@ -1,9 +1,13 @@
-import unittest
 import sys
+import unittest
+
 sys.path.append('..')
 
-from src.loader import Loader
 from src.extractor import Extractor
+from src.loader import Loader
+
+from tests.data.dummy import TEST_IMAGE_PATH
+
 
 class TestExtractor(unittest.TestCase):
     def test_init(self):
@@ -26,7 +30,7 @@ class TestExtractor(unittest.TestCase):
         self.assertEqual(str(extractor), s)
     
     def test_extract(self):
-        path = "./data/signed_image.jpg"
+        path = TEST_IMAGE_PATH
         loader = Loader()
         mask = loader.get_masks(path)[0]
 

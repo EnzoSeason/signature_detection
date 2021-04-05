@@ -1,17 +1,20 @@
-import unittest
-import numpy as np
 import sys
+import unittest
+
+import numpy as np
 
 sys.path.append("..")
 
 from src.loader import Loader
+
+from tests.data.dummy import TEST_IMAGE_PATH, TEST_PDF_PATH
 
 
 class TestLoader(unittest.TestCase):
     def test_loader_init(self):
         loader = Loader()
         self.assertEqual(loader.low_threshold, (0, 0, 250))
-    
+
     def test_str(self):
         loader = Loader()
         s = "\nLoader\n==========\n"
@@ -55,7 +58,7 @@ class TestLoader(unittest.TestCase):
             cm.exception.__str__(), "Document should be jpg/jpeg, png or pdf."
         )
 
-        path = "./data/signed_image.jpg"
+        path = TEST_IMAGE_PATH
         masks = loader.get_masks(path)
         self.assertEqual(len(masks), 1)
 
@@ -63,7 +66,7 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(first_mask_list[0], 0)
         self.assertEqual(first_mask_list[1], 255)
 
-        path = "./data/signed_file.pdf"
+        path = TEST_PDF_PATH
         masks = loader.get_masks(path)
         self.assertEqual(len(masks), 2)
 

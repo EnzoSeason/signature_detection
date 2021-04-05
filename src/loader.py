@@ -1,6 +1,8 @@
 from typing import Any
+
 import cv2
 import numpy as np
+from pdf2image import convert_from_path
 
 from src.filehelper import FileHelper
 
@@ -100,7 +102,7 @@ class _PdfWorker(_ImageWorker):
         create the mask that the bright parts are marked as 255, the rest as 0,
         page by page
         """
-        images = FileHelper.fileToImages(path)
+        images = convert_from_path(path)
 
         masks = []
         for image in images:
