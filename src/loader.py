@@ -1,3 +1,4 @@
+from typing import Any
 import cv2
 import numpy as np
 
@@ -56,12 +57,12 @@ class Loader:
             return loader.get_pdf_masks(path)
 
 
-class _ImageWorker():
+class _ImageWorker:
     def __init__(self, low_threshold: tuple, high_threshold: tuple) -> None:
         self.low_threshold = low_threshold
         self.high_threshold = high_threshold
 
-    def make_mask(self, image):
+    def make_mask(self, image) -> Any:
         """
         create a mask that the bright parts are marked as 255, the rest as 0.
 
@@ -79,7 +80,7 @@ class _ImageWorker():
         )
         return frame_threshold
 
-    def get_image_mask(self, path: str):
+    def get_image_mask(self, path: str) -> Any:
         image = cv2.imread(path)
         return self.make_mask(image)
 
