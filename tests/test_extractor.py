@@ -26,7 +26,7 @@ class TestExtractor(unittest.TestCase):
         self.assertEqual(str(extractor), s)
     
     def test_extract(self):
-        path = "./data/signed_image.jpeg"
+        path = "./data/signed_image.jpg"
         loader = Loader()
         mask = loader.get_masks(path)[0]
 

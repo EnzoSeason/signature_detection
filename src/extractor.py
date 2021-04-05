@@ -92,4 +92,7 @@ class Extractor:
         too_small_mask = too_small[labeled_image]
         labeled_image[too_small_mask] = 0
 
-        return labeled_image
+        labeled_mask = np.full(labeled_image.shape, 255, dtype="uint8")
+        labeled_mask = labeled_mask * (labeled_image == 0)
+
+        return labeled_mask
