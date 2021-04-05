@@ -44,10 +44,11 @@ class Extractor:
         s = "\nExtractor\n==========\n"
         s += "outlier_weight = {}\n".format(self.outlier_weight)
         s += "outlier_bias = {}\n".format(self.outlier_bias)
-        s += "> small_outlier_size = outlier_weight * average_region_size + outlier_bias \n"
-        s += "amplfier = {} \n".format(self.amplfier)
-        s += "> large_outlier_size = amplfier * small_outlier_size \n"
+        s += "> small_outlier_size = outlier_weight * average_region_size + outlier_bias\n"
+        s += "amplfier = {}\n".format(self.amplfier)
+        s += "> large_outlier_size = amplfier * small_outlier_size\n"
         s += "min_area_size = {} (pixels)\n".format(self.min_area_size)
+        s += "> min_area_size is used to calculate average_region_size.\n"
         return s
 
     def extract(self, mask) -> Any:
