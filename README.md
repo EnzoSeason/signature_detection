@@ -26,6 +26,12 @@ A simple tool to detect if there is **a signature** in **an image** or **a PDF f
     python demo.py --file my-file.pdf
     ```
 
+## Example
+
+We use the following image as an example. The full example (sign detection of image and pdf file) is in the [demo notebook](dev.ipynb)
+
+![signed_image](./data/input/signed_image.jpeg)
+
 ## Unit Tests
 
 All the codes are covered.
