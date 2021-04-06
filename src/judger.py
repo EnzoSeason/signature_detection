@@ -22,7 +22,9 @@ class Judger:
     
     Methods:
     --------
-    - 
+    - judge(mask: numpy array) -> bool
+       
+       identify if the mask is a signature
     '''
     def __init__(self, size_ratio=4, pixel_ratio=0.5) -> None:
         self.size_ratio = size_ratio
