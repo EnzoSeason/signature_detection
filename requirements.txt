@@ -14,9 +14,9 @@ bleach=3.3.0=pyh44b312d_0
 brotlipy=0.7.0=py38h5406a74_1001
 bzip2=1.0.8=hc929b4f_4
 c-ares=1.17.1=h0d85af4_1
-ca-certificates=2020.12.5=h033912b_0
+ca-certificates=2020.10.14=0
 cairo=1.16.0=he43a7df_1008
-certifi=2020.12.5=py38h50d1736_1
+certifi=2020.6.20=py38_0
 cffi=1.14.5=py38ha97d567_0
 chardet=4.0.0=py38h50d1736_1
 click=7.1.2=pyh9f0ad1d_0
@@ -49,6 +49,7 @@ ipython_genutils=0.2.0=py38_0
 jasper=1.900.1=h636a363_1006
 jedi=0.18.0=py38h50d1736_2
 jinja2=2.11.3=pyh44b312d_0
+joblib=0.17.0=py_0
 jpeg=9d=hbcb3906_0
 json5=0.9.5=pyh9f0ad1d_0
 jsonschema=3.2.0=pyhd8ed1ab_3
@@ -143,6 +144,7 @@ readline=8.1=h05e3726_0
 regex=2021.3.17=py38h96a0964_0
 requests=2.25.1=pyhd3deb0d_0
 scikit-image=0.17.2=py38h81aa140_0
+scikit-learn=0.23.2=py38h959d312_0
 scipy=1.6.2=py38h431c0a8_0
 send2trash=1.5.0=py_0
 setuptools=49.6.0=py38h50d1736_3
@@ -151,6 +153,7 @@ sniffio=1.2.0=py38h50d1736_1
 sqlite=3.35.3=h44b9ce1_0
 terminado=0.9.4=py38h50d1736_0
 testpath=0.4.4=py_0
+threadpoolctl=2.1.0=pyh5ca1d4c_0
 tifffile=2020.10.1=py38h0cf3a3e_2
 tk=8.6.10=h0419947_1
 toml=0.10.2=pyhd8ed1ab_0
