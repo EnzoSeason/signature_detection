@@ -41,3 +41,11 @@ class TestExtractor(unittest.TestCase):
         mask_list = list(np.unique(labeled_mask))
         self.assertEqual(mask_list[0], 0)
         self.assertEqual(mask_list[1], 255)
+
+        mask = np.array([[0, 255, 0], [0, 255, 0]], dtype="uint8")
+        labeled_mask = extractor.extract(mask)
+
+        mask_bincounts = list(np.bincount(mask.ravel()))
+        labeled_mask_bincounts = list(np.bincount(labeled_mask.ravel()))
+        self.assertEqual(mask_bincounts[0], labeled_mask_bincounts[0])
+        self.assertEqual(mask_bincounts[255], labeled_mask_bincounts[255])

@@ -74,25 +74,28 @@ class Extractor:
             if region.area > self.min_area_size:
                 total_pixels += region.area
                 nb_region += 1
+        
+        if nb_region > 1:
+            average = total_pixels / nb_region
+            # small_size_outlier is used as a threshold value to remove pixels
+            # are smaller than small_size_outlier
+            small_size_outlier = average * self.outlier_weight + self.outlier_bias
 
-        average = total_pixels / nb_region
-        # small_size_outlier is used as a threshold value to remove pixels
-        # are smaller than small_size_outlier
-        small_size_outlier = average * self.outlier_weight + self.outlier_bias
+            # big_size_outlier is used as a threshold value to remove pixels
+            # are bigger than big_size_outlier
+            big_size_outlier = small_size_outlier * self.amplfier
 
-        # big_size_outlier is used as a threshold value to remove pixels
-        # are bigger than big_size_outlier
-        big_size_outlier = small_size_outlier * self.amplfier
+            # remove small pixels
+            labeled_image = morphology.remove_small_objects(labels, small_size_outlier)
+            # remove the big pixels
+            component_sizes = np.bincount(labeled_image.ravel())
+            too_small = component_sizes > (big_size_outlier)
+            too_small_mask = too_small[labeled_image]
+            labeled_image[too_small_mask] = 0
 
-        # remove small pixels
-        labeled_image = morphology.remove_small_objects(labels, small_size_outlier)
-        # remove the big pixels
-        component_sizes = np.bincount(labeled_image.ravel())
-        too_small = component_sizes > (big_size_outlier)
-        too_small_mask = too_small[labeled_image]
-        labeled_image[too_small_mask] = 0
-
-        labeled_mask = np.full(labeled_image.shape, 255, dtype="uint8")
-        labeled_mask = labeled_mask * (labeled_image == 0)
+            labeled_mask = np.full(labeled_image.shape, 255, dtype="uint8")
+            labeled_mask = labeled_mask * (labeled_image == 0)
+        else:
+            labeled_mask = mask
 
         return labeled_mask
