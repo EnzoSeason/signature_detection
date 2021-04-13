@@ -27,16 +27,14 @@ class Judger:
        identify if the mask is a signature
     """
 
-    def __init__(self, size_ratio=4, min_pixel_ratio=0.1, max_pixel_ratio=1) -> None:
+    def __init__(self, size_ratio=[2, 4], pixel_ratio=[0.01, 1]) -> None:
         self.size_ratio = size_ratio
-        self.min_pixel_ratio = min_pixel_ratio
-        self.max_pixel_ratio = max_pixel_ratio
+        self.pixel_ratio = pixel_ratio
 
     def __str__(self) -> str:
         s = "\nJudger\n==========\n"
-        s += "size_ratio = {}\n".format(self.size_ratio)
-        s += "min_pixel_ratio = {}\n".format(self.min_pixel_ratio)
-        s += "max_pixel_ratio = {}\n".format(self.max_pixel_ratio)
+        s += "size_ratio = {}\n".format(str(self.size_ratio))
+        s += "pixel_ratio = {}\n".format(str(self.pixel_ratio))
         return s
 
     def _is_valid_mask(self, mask: Any) -> bool:
@@ -49,15 +47,15 @@ class Judger:
 
     def judge(self, mask: Any) -> bool:
         if self._is_valid_mask(mask):
-            if max(mask.shape) / min(mask.shape) > self.size_ratio:
+            size_ratio = max(mask.shape) / min(mask.shape)
+            print('size_ratio', size_ratio)
+            if size_ratio < self.size_ratio[0] or size_ratio > self.size_ratio[1]:
                 return False
 
             bincounts = np.bincount(mask.ravel())
-            print(bincounts[0] / bincounts[255])
-            if (
-                bincounts[0] / bincounts[255] > self.max_pixel_ratio
-                or bincounts[0] / bincounts[255] < self.min_pixel_ratio
-            ):
+            pixel_ratio = bincounts[0] / bincounts[255]
+            print('pixel_ratio', pixel_ratio)
+            if pixel_ratio < self.pixel_ratio[0] or pixel_ratio > self.pixel_ratio[1]:
                 return False
 
             return True
