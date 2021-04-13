@@ -1,4 +1,5 @@
-import os
+import math
+from typing import Any
 import cv2
 import numpy as np
 from PIL import Image
@@ -13,6 +14,13 @@ class Cropper:
       - min_region_size
 
         the min area size of the signature.
+    
+        - border_ratio: float
+
+            border = min(h, w) * border_ratio
+            
+            h, w are the heigth and width of the input mask.
+            The border will be removed by the function _remove_borders.
 
     Methods:
     --------
@@ -42,12 +50,14 @@ class Cropper:
         return a list of cropped images (np.array)
     """
 
-    def __init__(self, min_region_size=10000):
+    def __init__(self, min_region_size=10000, border_ratio=0.1):
         self.min_region_size = min_region_size
+        self.border_ratio = border_ratio
 
     def __str__(self) -> str:
         s = "\nCropper\n==========\n"
         s += "min_region_size = {}\n".format(self.min_region_size)
+        s += "border_ratio = {}\n".format(self.border_ratio)
         return s
 
     def find_contours(self, img):
@@ -89,9 +99,9 @@ class Cropper:
 
         return sorted_boxes
 
-    def is_intersected(self, box_a, box_b) -> bool:
-        [x_a, y_a, w_a, h_a] = box_a
-        [x_b, y_b, w_b, h_b] = box_b
+    def is_intersected(self, new_box, orginal_box) -> bool:
+        [x_a, y_a, w_a, h_a] = new_box
+        [x_b, y_b, w_b, h_b] = orginal_box
 
         if y_a > y_b + h_b:
             return False
@@ -116,6 +126,13 @@ class Cropper:
         max_h = max(h_a, h_b, (y_b + h_b - y_a), (y_a + h_a - y_b))
 
         return [min_x, min_y, max_w, max_h]
+    
+    def _remove_borders(self, mask: Any) -> Any:
+        """
+        remove the borders around the mask
+        """
+        border = math.floor(min(mask.shape) * self.border_ratio)
+        return mask[border : mask.shape[0] - border, border : mask.shape[1] - border]
 
     def boxes2regions(self, sorted_boxes) -> dict:
         regions = {}
@@ -126,7 +143,7 @@ class Cropper:
             else:
                 is_merged = False
                 for key, region in regions.items():
-                    if self.is_intersected(region, box) == True:
+                    if self.is_intersected(box, region) == True:
                         new_region = self.merge_boxes(region, box)
                         regions[key] = new_region
                         is_merged = True
@@ -144,7 +161,8 @@ class Cropper:
             [x, y, w, h] = region
 
             cropped = copy_img.crop((x, y, x + w, y + h))
-            cropped_images.append(np.array(cropped))
+            cropped = np.array(cropped)
+            cropped_images.append(self._remove_borders(cropped))
         return cropped_images
 
     def run(self, np_image):

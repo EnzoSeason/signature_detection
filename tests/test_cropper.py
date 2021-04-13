@@ -21,6 +21,7 @@ class TestCropper(unittest.TestCase):
         cropper = Cropper()
         s = "\nCropper\n==========\n"
         s += "min_region_size = {}\n".format(cropper.min_region_size)
+        s += "border_ratio = {}\n".format(cropper.border_ratio)
         self.assertEqual(str(cropper), s)
 
     def test_run(self):
