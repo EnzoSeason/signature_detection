@@ -11,8 +11,10 @@ from src.judger import Judger
 class TestJudger(unittest.TestCase):
     def test_init(self):
         judger = Judger()
-        self.assertEqual(judger.size_ratio, 4)
-        self.assertEqual(judger.pixel_ratio, 0.5)
+        self.assertEqual(judger.size_ratio[0], 1)
+        self.assertEqual(judger.size_ratio[1], 4)
+        self.assertEqual(judger.pixel_ratio[0], 0.01)
+        self.assertEqual(judger.pixel_ratio[1], 1)
 
     def test_str(self):
         judger = Judger()
@@ -50,7 +52,7 @@ class TestJudger(unittest.TestCase):
         res = judger.judge(mask)
         self.assertFalse(res)
 
-        mask = np.array([[255], [0]])
+        mask = np.array([[255, 0], [0, 0]])
         res = judger.judge(mask)
         self.assertFalse(res)
 
