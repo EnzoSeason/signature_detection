@@ -59,14 +59,21 @@ class TestCropper(unittest.TestCase):
 
     def test_is_intersected(self):
         cropper = Cropper()
-        box_a = [10, 10, 1, 1]
-
-        box_b = [0, 0, 1, 1]
+        box_b = [10, 10, 1, 1]
+        
+        # y_a > y_b + h_b
+        box_a = [0, 20, 1, 1]
         self.assertFalse(cropper.is_intersected(box_a, box_b))
 
-        box_b = [0, 10, 1, 1]
+        # y_a + h_a < y_b
+        box_a = [0, 0, 1, 1]
         self.assertFalse(cropper.is_intersected(box_a, box_b))
 
-        box_b = [20, 10, 1, 1]
+        # x_a > x_b + w_b
+        box_a = [20, 10, 1, 1]
+        self.assertFalse(cropper.is_intersected(box_a, box_b))
+
+        # x_a + w_a < x_b
+        box_a = [0, 10, 1, 1]
         self.assertFalse(cropper.is_intersected(box_a, box_b))
 

@@ -99,9 +99,9 @@ class Cropper:
 
         return sorted_boxes
 
-    def is_intersected(self, new_box, orginal_box) -> bool:
+    def is_intersected(self, new_box, orignal_box) -> bool:
         [x_a, y_a, w_a, h_a] = new_box
-        [x_b, y_b, w_b, h_b] = orginal_box
+        [x_b, y_b, w_b, h_b] = orignal_box
 
         if y_a > y_b + h_b:
             return False
