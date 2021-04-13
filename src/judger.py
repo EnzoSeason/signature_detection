@@ -9,16 +9,23 @@ class Judger:
 
     Attributes:
     -----------
-    - size_ratio: int
+    - size_ratio: [low, high]
 
-        It's max(h, w) / min(h, w).
+        low < max(h, w) / min(h, w) < high.
 
         h, w are the heigth and width of the input mask.
-    - max_pixel_ratio: int
 
-       It's the number of 0 / the number of 255 in the mask.
+    - max_pixel_ratio: [low, high]
+
+       low < the number of 0 / the number of 255 < high.
 
        The mask should only have 2 value, 0 and 255.
+
+    - border_ratio: float
+
+      border = min(h, w) * border_ratio
+
+      The border will be removed.
 
     Methods:
     --------
