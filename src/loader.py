@@ -2,7 +2,7 @@ from typing import Any
 
 import cv2
 import numpy as np
-from pdf2image import convert_from_path
+from wand.image import Image
 
 from src.filehelper import FileHelper
 
@@ -96,13 +96,22 @@ class _ImageWorker:
 class _PdfWorker(_ImageWorker):
     def __init__(self, low_threshold, high_threshold):
         super().__init__(low_threshold, high_threshold)
+    
+    def get_pdf_images(self, path: str) -> list:
+        imgs = []
+        with(Image(filename=path,resolution=200)) as source:
+            images=source.sequence
+            pages=len(images)
+            for i in range(pages):
+                imgs.append(images[i])
+        return imgs
 
     def get_pdf_masks(self, path: str) -> list:
         """
         create the mask that the bright parts are marked as 255, the rest as 0,
         page by page
         """
-        images = convert_from_path(path)
+        images = self.get_pdf_images(path)
 
         masks = []
         for image in images:
