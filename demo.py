@@ -18,9 +18,9 @@ def main(file_path: str) -> None:
         is_signed = False
         for mask in masks:
             labeled_mask = extractor.extract(mask)
-            cropped_images = cropper.run(labeled_mask)
-            for cropped_image in cropped_images:
-                is_signed = judger.judge(cropped_image)
+            [cropped_regions, cropped_masks] = cropper.run(labeled_mask)
+            for cropped_mask in cropped_masks:
+                is_signed = judger.judge(cropped_mask)
                 if is_signed:
                     break
             if is_signed:

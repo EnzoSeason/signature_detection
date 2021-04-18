@@ -28,7 +28,7 @@ A simple tool to detect if there is **a signature** in **an image** or **a PDF f
 
 ## Unit Tests
 
-All the codes are covered.
+All the codes in `src` are covered.
 
 ```
 cd tests
