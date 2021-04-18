@@ -40,9 +40,9 @@ class Judger:
     def _is_valid_mask(self, mask: Any) -> bool:
         values = np.unique(mask)
         if len(values) != 2:
-            raise Exception("The input np.array should have 2 value.")
+            return False
         if values[0] != 0 or values[1] != 255:
-            raise Exception("The input np.array should only have 2 value, 0 and 255.")
+            return False
         return True
 
     def judge(self, mask: Any) -> bool:
@@ -57,3 +57,12 @@ class Judger:
                 return False
 
             return True
+        else:
+            return False
+
+    def run(self, results: dict) -> list:
+        regions = []
+        for idx, result in results.items():
+            is_signed = self.judge(result["cropped_mask"])
+            regions.append({"id": idx, "signed": is_signed, "box": result["cropped_region"]})
+        return regions

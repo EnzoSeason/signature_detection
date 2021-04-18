@@ -20,8 +20,7 @@ def main(file_path: str) -> None:
             labeled_mask = extractor.extract(mask)
             results = cropper.run(labeled_mask)
             for result in results.values():
-                [cropped_region, cropped_mask] = result
-                is_signed = judger.judge(cropped_mask)
+                is_signed = judger.judge(result["cropped_mask"])
                 if is_signed:
                     break
             if is_signed:

@@ -14,11 +14,11 @@ class Cropper:
       - min_region_size
 
         the min area size of the signature.
-    
+
         - border_ratio: float
 
             border = min(h, w) * border_ratio
-            
+
             h, w are the heigth and width of the input mask.
             The border will be removed by the function _remove_borders.
 
@@ -46,7 +46,7 @@ class Cropper:
 
       - run(img_path) -> list
 
-        main function, crop the signatures, 
+        main function, crop the signatures,
         return a list of cropped images (np.array)
     """
 
@@ -126,14 +126,14 @@ class Cropper:
         max_h = max(h_a, h_b, (y_b + h_b - y_a), (y_a + h_a - y_b))
 
         return [min_x, min_y, max_w, max_h]
-    
+
     def _remove_borders(self, box) -> Any:
         """
         remove the borders around the box
         """
         [x, y, w, h] = box
         border = math.floor(min(w, h) * self.border_ratio)
-        return [x+border, y+border, w-border, h-border]
+        return [x + border, y + border, w - border, h - border]
 
     def boxes2regions(self, sorted_boxes) -> dict:
         regions = {}
@@ -166,7 +166,10 @@ class Cropper:
             cropped_image = image.crop((x, y, x + w, y + h))
             cropped_mask = np.array(cropped_image)
 
-            results[key] = [cropped_region, cropped_mask]
+            results[key] = {
+                "cropped_region": cropped_region,
+                "cropped_mask": cropped_mask,
+            }
 
         return results
 

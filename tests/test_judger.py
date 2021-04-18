@@ -5,8 +5,12 @@ import numpy as np
 
 sys.path.append("..")
 
+from src.cropper import Cropper
+from src.extractor import Extractor
+from src.loader import Loader
 from src.judger import Judger
 
+from tests.data.dummy import TEST_IMAGE_PATH
 
 class TestJudger(unittest.TestCase):
     def test_init(self):
@@ -27,19 +31,10 @@ class TestJudger(unittest.TestCase):
         judger = Judger()
 
         mask = np.array([0])
-        with self.assertRaises(Exception) as cm:
-            judger._is_valid_mask(mask)
-        self.assertEqual(
-            cm.exception.__str__(), "The input np.array should have 2 value."
-        )
+        self.assertFalse(judger._is_valid_mask(mask))
 
         mask = np.array([0, 1])
-        with self.assertRaises(Exception) as cm:
-            judger._is_valid_mask(mask)
-        self.assertEqual(
-            cm.exception.__str__(),
-            "The input np.array should only have 2 value, 0 and 255.",
-        )
+        self.assertFalse(judger._is_valid_mask(mask))
 
         mask = np.array([0, 255])
         res = judger._is_valid_mask(mask)
@@ -59,3 +54,24 @@ class TestJudger(unittest.TestCase):
         mask = np.array([[255, 255, 255], [0, 255, 255]])
         res = judger.judge(mask)
         self.assertTrue(res)
+    
+    def test_run(self):
+        path = TEST_IMAGE_PATH
+
+        loader = Loader()
+        mask = loader.get_masks(path)[0]
+
+        extractor = Extractor()
+        labeled_mask = extractor.extract(mask)
+
+        cropper = Cropper()
+        results = cropper.run(labeled_mask)
+
+        judger = Judger()
+        regions = judger.run(results)
+        
+        # assert
+        region = regions[0]
+        self.assertEqual(region["id"], 0)
+        self.assertEqual(region["signed"], True)
+        self.assertEqual(region["box"], results[0]["cropped_region"])

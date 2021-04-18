@@ -35,10 +35,9 @@ class TestCropper(unittest.TestCase):
 
         cropper = Cropper()
         results = cropper.run(labeled_mask)
-        [cropped_region, cropped_mask] = results[0]
-        self.assertEqual(len(cropped_region), 4)
+        self.assertEqual(len(results[0]["cropped_region"]), 4)
 
-        mask_list = list(np.unique(cropped_mask))
+        mask_list = list(np.unique(results[0]["cropped_mask"]))
         self.assertEqual(mask_list[0], 0)
         self.assertEqual(mask_list[1], 255)
 
