@@ -30,6 +30,10 @@ class TestJudger(unittest.TestCase):
     def test_is_valid_mask(self):
         judger = Judger()
 
+        mask = np.array([[0,0,0,0]])
+        res = judger.judge(mask)
+        self.assertFalse(res)
+
         mask = np.array([0])
         self.assertFalse(judger._is_valid_mask(mask))
 
