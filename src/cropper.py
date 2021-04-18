@@ -155,20 +155,20 @@ class Cropper:
 
         return regions
 
-    def crop_regions(self, mask, regions) -> list:
-        cropped_regions = []
-        cropped_masks = []
+    def crop_regions(self, mask, regions) -> dict:
+        results = {}
         for key, region in regions.items():
             # crop region
             cropped_region = self._remove_borders(region)
-            cropped_regions.append(cropped_region)
             [x, y, w, h] = cropped_region
 
             image = Image.fromarray(mask)
             cropped_image = image.crop((x, y, x + w, y + h))
             cropped_mask = np.array(cropped_image)
-            cropped_masks.append(cropped_mask)
-        return [cropped_regions, cropped_masks]
+
+            results[key] = [cropped_region, cropped_mask]
+
+        return results
 
     def run(self, np_image):
         """
