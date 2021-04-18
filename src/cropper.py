@@ -127,12 +127,13 @@ class Cropper:
 
         return [min_x, min_y, max_w, max_h]
     
-    def _remove_borders(self, mask: Any) -> Any:
+    def _remove_borders(self, box) -> Any:
         """
-        remove the borders around the mask
+        remove the borders around the box
         """
-        border = math.floor(min(mask.shape) * self.border_ratio)
-        return mask[border : mask.shape[0] - border, border : mask.shape[1] - border]
+        [x, y, w, h] = box
+        border = math.floor(min(w, h) * self.border_ratio)
+        return [x+border, y+border, w-border, h-border]
 
     def boxes2regions(self, sorted_boxes) -> dict:
         regions = {}
@@ -154,16 +155,20 @@ class Cropper:
 
         return regions
 
-    def crop_regions(self, img, regions) -> list:
-        cropped_images = []
+    def crop_regions(self, mask, regions) -> list:
+        cropped_regions = []
+        cropped_masks = []
         for key, region in regions.items():
-            copy_img = Image.fromarray(img)
-            [x, y, w, h] = region
+            # crop region
+            cropped_region = self._remove_borders(region)
+            cropped_regions.append(cropped_region)
+            [x, y, w, h] = cropped_region
 
-            cropped = copy_img.crop((x, y, x + w, y + h))
-            cropped = np.array(cropped)
-            cropped_images.append(self._remove_borders(cropped))
-        return cropped_images
+            image = Image.fromarray(mask)
+            cropped_image = image.crop((x, y, x + w, y + h))
+            cropped_mask = np.array(cropped_image)
+            cropped_masks.append(cropped_mask)
+        return [cropped_regions, cropped_masks]
 
     def run(self, np_image):
         """
