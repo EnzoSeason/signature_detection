@@ -15,12 +15,12 @@ class Cropper:
 
         the min area size of the signature.
 
-        - border_ratio: float
+      - border_ratio: float
 
-            border = min(h, w) * border_ratio
+          border = min(h, w) * border_ratio
 
-            h, w are the heigth and width of the input mask.
-            The border will be removed by the function _remove_borders.
+          h, w are the heigth and width of the input mask.
+          The border will be removed by the function _remove_borders.
 
     Methods:
     --------

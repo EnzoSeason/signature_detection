@@ -2,7 +2,19 @@
 
 A simple tool to detect if there is **a signature** in **an image** or **a PDF file**.
 
-## Installation of anaconda
+## Installation of PyPi
+
+It's the quick way to use this tool.
+
+`signature-detect` package contains the codes in the `src`.
+
+```
+pip install signature-detect
+```
+
+## Installation of Anaconda
+
+It's the recommended way to explore this tool. It provides notebooks for playing around. 
 
 1. install [anaconda](https://docs.anaconda.com/anaconda/install/)
 
@@ -129,6 +141,12 @@ Suppose `(h, w) = region.shape`.
 
    If `h * w < min_region_size`, then this region is ignored.
 
+- border_ratio: float
+
+    border = min(h, w) * border_ratio
+
+    The border will be removed if this attribute is not `0`.
+
 #### Result
 
 ![signature](./data/output/signature.jpeg)
@@ -142,13 +160,15 @@ The judger reads the cropped mask and identifies if it's a signature or not.
 
 Suppose `(h, w) = cropped_mask.shape`.
 
-- size_ratio = 4
+- size_ratio: [low, high]
 
-    If `max(h, w) / min(h, w) > size_ratio`, then it's not a signature.
+    low < max(h, w) / min(h, w) < high.
 
-- pixel_ratio = 0.5
+- max_pixel_ratio: [low, high]
 
-    If number of `0` / number of `255` > pixel_ratio, then it's not a signature.
+    low < the number of 0 / the number of 255 < high.
+
+    The mask should only have 2 value, 0 and 255.
 
 #### Result
 

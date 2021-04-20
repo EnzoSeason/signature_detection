@@ -2,22 +2,7 @@
 
 A simple tool to detect if there is **a signature** in **an image** or **a PDF file**.
 
-
-## Installation
-
-### Production version
-
-```bash
-pip install signature-detect
-```
-
-### Dev version
-
-If you would like to develop this package and run the tests, you can download the code and install dev environment locally.
-
-```bash
-pip install -e .[dev]
-```
+The full documentation is presented at the [Github Repository](https://github.com/EnzoSeason/signature_detection).
 
 ## Usage
 
@@ -87,4 +72,12 @@ judger = Judger(
     pixel_ratio=[0.01, 1])
 
 is_signed = judger.judge(result["cropped_mask"])
+```
+
+## Dev version
+
+If you would like to develop this package and run the tests, you can download the code and install dev environment locally.
+
+```bash
+pip install -e .[dev]
 ```

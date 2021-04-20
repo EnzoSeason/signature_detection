@@ -5,18 +5,15 @@ with open("package.md", "r") as md:
 
 setup(
     name="signature-detect",
-    version="0.1.0",
-    url="https://github.com/EnzoSeason/signature_detect",
+    version="0.1.1",
+    url="https://github.com/EnzoSeason/signature_detection",
     author="Jijie LIU",
     author_email="liujijieseason@gmail.com",
     description="A package for the signature detection",
     long_description=long_description,
     long_description_content_type="text/markdown",
     py_modules=[
-        "signature_detect.loader",
-        "signature_detect.extractor",
-        "signature_detect.cropper",
-        "signature_detect.judger",
+        "signature_detect",
     ],
     package_dir={"": "src"},
     install_requires=[
@@ -27,4 +24,5 @@ setup(
         "opencv-python",
     ],
     extras_require={"dev": ["coverage>=5.5"]},
+    license = "MIT",
 )
