@@ -1,8 +1,16 @@
 # Signature Detection
 
-A simple tool to detect if there is **a signature** in **an image** or **a PDF file**.
+A simple tool to detect if there are **signatures** in **an image** or **a PDF file**.
 
 The full documentation is presented at the [Github Repository](https://github.com/EnzoSeason/signature_detection).
+
+## Extra Dependencies
+
+This tool uses `Wand` to convert a PDF file into images. 
+
+`Wand` is a ctypes-based simple `ImageMagick` binding for Python. You may need to install `ImageMagick` on your local machine.
+
+More details are available [here](https://docs.wand-py.org/en/0.6.6/).
 
 ## Usage
 
