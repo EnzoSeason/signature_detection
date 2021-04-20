@@ -5,10 +5,10 @@ import numpy as np
 
 sys.path.append("..")
 
-from signature_detection.cropper import Cropper
-from signature_detection.extractor import Extractor
-from signature_detection.loader import Loader
-from signature_detection.judger import Judger
+from signature_detect.cropper import Cropper
+from signature_detect.extractor import Extractor
+from signature_detect.loader import Loader
+from signature_detect.judger import Judger
 
 from tests.data.dummy import TEST_IMAGE_PATH
 
