@@ -32,7 +32,8 @@ All the codes in `src` are covered.
 
 ```
 cd tests
-source coverage.sh
+coverage run -m unittest
+coverage report -m
 ```
 
 ## Example
