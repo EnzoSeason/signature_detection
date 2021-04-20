@@ -1,10 +1,9 @@
 import sys
 
-
-from src.loader import Loader
-from src.extractor import Extractor
-from src.cropper import Cropper
-from src.judger import Judger
+from signature_detection.cropper import Cropper
+from signature_detection.extractor import Extractor
+from signature_detection.loader import Loader
+from signature_detection.judger import Judger
 
 
 def main(file_path: str) -> None:

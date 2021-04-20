@@ -2,9 +2,8 @@ from typing import Any
 
 import cv2
 import numpy as np
+import os
 from wand.image import Image
-
-from src.filehelper import FileHelper
 
 
 class Loader:
@@ -48,7 +47,9 @@ class Loader:
         return True
 
     def get_masks(self, path) -> list:
-        ext = FileHelper.getFileExtenstion(path).lower()
+        basename = os.path.basename(path)
+        dn, dext = os.path.splitext(basename)
+        ext = dext[1:].lower()
         if ext == "pdf":
             self.document_type = "PDF"
         elif ext == "jpg" or ext == "jpeg" or ext == "png":

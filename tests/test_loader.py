@@ -5,7 +5,7 @@ import numpy as np
 
 sys.path.append("..")
 
-from src.loader import Loader
+from signature_detection.loader import Loader
 
 from tests.data.dummy import TEST_IMAGE_PATH, TEST_PDF_PATH
 
