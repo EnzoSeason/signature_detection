@@ -50,7 +50,7 @@ coverage report -m
 
 ## Example
 
-We use the following image as an example. The full example (sign detection of image and pdf file) is in the [demo notebook](demo.ipynb)
+We use the following image as an example. The full example is in the [demo notebook](demo.ipynb)
 
 ![signed_image](./data/input/signed_image.jpeg)
 
@@ -169,6 +169,12 @@ Suppose `(h, w) = cropped_mask.shape`.
     low < the number of 0 / the number of 255 < high.
 
     The mask should only have 2 value, 0 and 255.
+
+By default: 
+
+- size_ratio = [1, 4]
+
+- max_pixel_ratio = [0.01, 1]
 
 #### Result
 
