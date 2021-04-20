@@ -5,7 +5,7 @@ with open("package.md", "r") as md:
 
 setup(
     name="signature-detection",
-    version="0.0.1",
+    version="0.1.0",
     url="https://github.com/EnzoSeason/signature_detection",
     author="Jijie LIU",
     author_email="liujijieseason@gmail.com",
