@@ -2,14 +2,14 @@
 
 A simple tool to detect if there is **a signature** in **an image** or **a PDF file**.
 
-## Installation
+## Installation of anaconda
 
 1. install [anaconda](https://docs.anaconda.com/anaconda/install/)
 
-2. install packages
+2. install dependencies
 
     ```
-    conda create --name <env> --file requirements.txt
+    conda create --name <env> --file conda.txt
     ```
 
 ## Demo
