@@ -52,10 +52,10 @@ class Loader:
         ext = dext[1:].lower()
         if ext == "pdf":
             self.document_type = "PDF"
-        elif ext == "jpg" or ext == "jpeg" or ext == "png":
+        elif ext == "jpg" or ext == "jpeg" or ext == "png" or ext == "tif":
             self.document_type = "IMAGE"
         else:
-            raise Exception("Document should be jpg/jpeg, png or pdf.")
+            raise Exception("Document should be jpg/jpeg, png, tif or pdf.")
 
         if self.document_type == "IMAGE":
             loader = _ImageWorker(self.low_threshold, self.high_threshold)
