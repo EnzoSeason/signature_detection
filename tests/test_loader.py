@@ -7,7 +7,7 @@ sys.path.append("..")
 
 from signature_detect.loader import Loader
 
-from tests.data.dummy import TEST_IMAGE_PATH, TEST_PDF_PATH
+from tests.data.dummy import TEST_IMAGE_PATH, TEST_PDF_PATH, TEST_TIF_PATH
 
 
 class TestLoader(unittest.TestCase):
@@ -55,9 +55,10 @@ class TestLoader(unittest.TestCase):
         with self.assertRaises(Exception) as cm:
             loader.get_masks(path)
         self.assertEqual(
-            cm.exception.__str__(), "Document should be jpg/jpeg, png or pdf."
+            cm.exception.__str__(), "Document should be jpg/jpeg, png, tif or pdf."
         )
 
+        # jpeg test
         path = TEST_IMAGE_PATH
         masks = loader.get_masks(path)
         self.assertEqual(len(masks), 1)
@@ -66,6 +67,16 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(first_mask_list[0], 0)
         self.assertEqual(first_mask_list[1], 255)
 
+        # tif test
+        path = TEST_TIF_PATH
+        masks = loader.get_masks(path)
+        self.assertEqual(len(masks), 1)
+
+        first_mask_list = list(np.unique(masks[0]))
+        self.assertEqual(first_mask_list[0], 0)
+        self.assertEqual(first_mask_list[1], 255)
+
+        # pdf test
         path = TEST_PDF_PATH
         masks = loader.get_masks(path)
         self.assertEqual(len(masks), 2)
