@@ -42,7 +42,7 @@ class TestCropper(unittest.TestCase):
         self.assertEqual(mask_list[1], 255)
 
     def test_boxes2regions(self):
-        cropper = Cropper()
+        cropper = Cropper(border_ratio=0)
         boxes = [[0, 0, 10, 10], [9, 9, 5, 5], [20, 20, 1, 1]]
         regions = cropper.boxes2regions(boxes)
         self.assertEqual(len(regions), 2)
@@ -60,7 +60,7 @@ class TestCropper(unittest.TestCase):
     def test_is_intersected(self):
         cropper = Cropper()
         box_b = [10, 10, 1, 1]
-        
+
         # y_a > y_b + h_b
         box_a = [0, 20, 1, 1]
         self.assertFalse(cropper.is_intersected(box_a, box_b))
@@ -76,4 +76,3 @@ class TestCropper(unittest.TestCase):
         # x_a + w_a < x_b
         box_a = [0, 10, 1, 1]
         self.assertFalse(cropper.is_intersected(box_a, box_b))
-

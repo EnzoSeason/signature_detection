@@ -146,29 +146,42 @@ class Cropper:
                 for key, region in regions.items():
                     if self.is_intersected(box, region) == True:
                         new_region = self.merge_boxes(region, box)
-                        regions[key] = new_region
+                        regions[key] = self._remove_borders(new_region)
                         is_merged = True
                         break
                 if is_merged == False:
                     key = len(regions)
-                    regions[key] = box
+                    regions[key] = self._remove_borders(box)
 
         return regions
 
-    def crop_regions(self, mask, regions) -> dict:
+    def get_cropped_masks(self, mask, regions) -> dict:
+        """
+        return cropped masks
+        """
+
         results = {}
         for key, region in regions.items():
-            # crop region
-            cropped_region = self._remove_borders(region)
-            [x, y, w, h] = cropped_region
-
+            [x, y, w, h] = region
             image = Image.fromarray(mask)
             cropped_image = image.crop((x, y, x + w, y + h))
             cropped_mask = np.array(cropped_image)
 
+            results[key] = cropped_mask
+        return results
+
+    def merge_regions_and_masks(self, mask, regions) -> dict:
+        """
+        helper function: put regions and masks in a dict, and return it.
+        """
+
+        cropped_image = self.get_cropped_masks(mask, regions)
+        results = {}
+
+        for key in regions.keys():
             results[key] = {
-                "cropped_region": cropped_region,
-                "cropped_mask": cropped_mask,
+                "cropped_region": regions[key],
+                "cropped_mask": cropped_image[key],
             }
 
         return results
@@ -185,4 +198,4 @@ class Cropper:
         regions = self.boxes2regions(sorted_boxes)
 
         # crop regions
-        return self.crop_regions(np_image, regions)
+        return self.merge_regions_and_masks(np_image, regions)

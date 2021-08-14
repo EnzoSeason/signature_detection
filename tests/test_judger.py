@@ -78,4 +78,5 @@ class TestJudger(unittest.TestCase):
         region = regions[0]
         self.assertEqual(region["id"], 0)
         self.assertEqual(region["signed"], True)
-        self.assertEqual(region["box"], results[0]["cropped_region"])
+        comparison = region["box"] == results[0]["cropped_region"]
+        self.assertTrue(comparison.all())
