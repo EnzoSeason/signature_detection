@@ -1,15 +1,12 @@
+import numpy as np
 import sys
 import unittest
-
-import numpy as np
-
-sys.path.append("..")
-
 from signature_detect.cropper import Cropper
 from signature_detect.extractor import Extractor
 from signature_detect.loader import Loader
-
 from tests.data.dummy import TEST_IMAGE_PATH
+
+sys.path.append("..")
 
 
 class TestCropper(unittest.TestCase):

@@ -1,16 +1,14 @@
+import numpy as np
 import sys
 import unittest
-
-import numpy as np
-
-sys.path.append("..")
-
 from signature_detect.cropper import Cropper
 from signature_detect.extractor import Extractor
 from signature_detect.loader import Loader
 from signature_detect.judger import Judger
-
 from tests.data.dummy import TEST_IMAGE_PATH
+
+sys.path.append("..")
+
 
 class TestJudger(unittest.TestCase):
     def test_init(self):
@@ -30,7 +28,7 @@ class TestJudger(unittest.TestCase):
     def test_is_valid_mask(self):
         judger = Judger()
 
-        mask = np.array([[0,0,0,0]])
+        mask = np.array([[0, 0, 0, 0]])
         res = judger.judge(mask)
         self.assertFalse(res)
 
@@ -47,7 +45,7 @@ class TestJudger(unittest.TestCase):
     def test_judge(self):
         judger = Judger()
 
-        mask = np.array([[255,0,0,0,0]])
+        mask = np.array([[255, 0, 0, 0, 0]])
         res = judger.judge(mask)
         self.assertFalse(res)
 

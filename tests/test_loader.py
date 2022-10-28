@@ -1,13 +1,10 @@
+import numpy as np
 import sys
 import unittest
-
-import numpy as np
+from signature_detect.loader import Loader
+from tests.data.dummy import TEST_IMAGE_PATH, TEST_PDF_PATH, TEST_TIF_PATH
 
 sys.path.append("..")
-
-from signature_detect.loader import Loader
-
-from tests.data.dummy import TEST_IMAGE_PATH, TEST_PDF_PATH, TEST_TIF_PATH
 
 
 class TestLoader(unittest.TestCase):

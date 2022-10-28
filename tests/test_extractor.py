@@ -1,14 +1,11 @@
+import numpy as np
 import sys
 import unittest
-
-import numpy as np
-
-sys.path.append("..")
-
 from signature_detect.extractor import Extractor
 from signature_detect.loader import Loader
-
 from tests.data.dummy import TEST_IMAGE_PATH
+
+sys.path.append("..")
 
 
 class TestExtractor(unittest.TestCase):
@@ -16,7 +13,7 @@ class TestExtractor(unittest.TestCase):
         extractor = Extractor()
         self.assertEqual(extractor.outlier_weight, 3)
         self.assertEqual(extractor.outlier_bias, 100)
-        self.assertEqual(extractor.amplfier, 10)
+        self.assertEqual(extractor.amplifier, 10)
         self.assertEqual(extractor.min_area_size, 10)
 
     def test_str(self):
@@ -25,8 +22,8 @@ class TestExtractor(unittest.TestCase):
         s += "outlier_weight = 3\n"
         s += "outlier_bias = 100\n"
         s += "> small_outlier_size = outlier_weight * average_region_size + outlier_bias\n"
-        s += "amplfier = 10\n"
-        s += "> large_outlier_size = amplfier * small_outlier_size\n"
+        s += "amplifier = 10\n"
+        s += "> large_outlier_size = amplifier * small_outlier_size\n"
         s += "min_area_size = 10 (pixels)\n"
         s += "> min_area_size is used to calculate average_region_size.\n"
         self.assertEqual(str(extractor), s)

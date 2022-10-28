@@ -40,7 +40,7 @@ It's the recommended way to explore this tool. It provides notebooks for playing
 
 ## Unit Tests
 
-All the codes in `src` are covered.
+All the code in `src` is covered.
 
 ```
 cd tests
@@ -59,7 +59,7 @@ The loader reads the file and creates a mask.
 
 The mask is a numpy array. The bright parts are set to 255, the rest is set to 0. It contains ONLY these 2 numbers.
 
-#### Atrributes
+#### Attributes
 
 - low_threshold = (0, 0, 250)
 
@@ -70,7 +70,7 @@ They control the creation of the mask, used in the function `cv.inRange`.
 
 #### Result
 
-Here, yellow is `255`, purple is `0`.
+Here, yellow is `255` and purple is `0`.
 
 ![mask](./data/output/mask.jpeg)
 
@@ -80,19 +80,19 @@ The extractor, first, generates the regions from the mask.
 
 Then, it removes the small and the big regions because the signature is neither too big nor too small.
 
-The process is as followed.
+The process is as follows:
 
 1. label the image
 
    `skimage.measure.label` labels the connected regions of an integer array. It returns a labeled array, where all connected regions are assigned the same integer value.
 
-2. calculate the average size of regions
+2. calculate the average size of the regions
 
-   Here, the size means **the number of the pixels in a region**. 
+   Here, the size means **the number of pixels in a region**. 
 
-   We accumulate the number of the pixels in all the regions, `total_pixels`. The average size is `total_pixels / nb_regions`.
+   We accumulate the number of pixels in all the regions, `total_pixels`. The average size is `total_pixels / nb_regions`.
 
-   If the size of a region is smaller `min_area_size`, this region is ignored. `min_area_size` is given by the user.
+   If the size of a region is smaller than `min_area_size`, this region is ignored. `min_area_size` is given by the user.
 
 3. calculate the size of the small outlier
 
@@ -105,10 +105,10 @@ The process is as followed.
 4. calculate the size of the big outlier
 
     ```
-    big_size_outlier = small_size_outlier * amplfier
+    big_size_outlier = small_size_outlier * amplifier
     ```
 
-    `amplfier` is given by the user.
+    `amplifier` is given by the user.
 
 5. remove the small and big outliers
 
@@ -118,7 +118,7 @@ The process is as followed.
 
 - outlier_bias = 100
 
-- amplfier = 10 
+- amplifier = 10 
 
   > `15` is used in the demo.
 
@@ -131,7 +131,7 @@ The process is as followed.
 
 ### Cropper
 
-The cropper finds the **contours** of regions in the **labeled masks** and crop them.
+The cropper finds the **contours** of regions in the **labeled masks** and crops them.
 
 #### Attributes
 
@@ -166,9 +166,9 @@ Suppose `(h, w) = cropped_mask.shape`.
 
 - max_pixel_ratio: [low, high]
 
-    low < the number of 0 / the number of 255 < high.
+    low < the number of 0s / the number of 255s < high.
 
-    The mask should only have 2 value, 0 and 255.
+    The mask should only have 2 values, 0 and 255.
 
 By default: 
 
@@ -180,6 +180,6 @@ By default:
 
 - `max(h, w) / min(h, w)` = 3.48
 
-- number of `0` / number of `255` = 0.44
+- number of `0s` / number of `255s` = 0.44
 
 So, this image is signed.
