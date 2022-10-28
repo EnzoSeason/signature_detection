@@ -1,16 +1,16 @@
+import numpy as np
 from typing import Any
 from skimage import measure, morphology
 from skimage.measure import regionprops
-import numpy as np
 
 
 class Extractor:
     """
-    Extract the signature from a mask. The process is as followed.
+    Extract the signature from a mask. The process is as follows.
 
     1. It finds the regions in an image mask. Each region has a label (unique number).
     2. It removes the small regions. The small region is defined by attributes.
-    3. It remove the big regions. The big region is defined by attributes.
+    3. It removes the big regions. The big region is defined by attributes.
     4. It returns a labeled image. The numbers in the image are the region labels, NOT pixels.
 
     Attributes
@@ -19,8 +19,8 @@ class Extractor:
         The weight of small outlier size
     outlier_bias: int
         The bias of small outlier size
-    amplfier: int
-        The amplfier calculates the big outlier size from the small one
+    amplifier: int
+        The amplifier calculates the big outlier size from the small one
     min_area_size: int
         The min region area size in the labeled image.
 
@@ -31,13 +31,13 @@ class Extractor:
     """
 
     def __init__(
-        self, outlier_weight=3, outlier_bias=100, amplfier=10, min_area_size=10
+        self, outlier_weight=3, outlier_bias=100, amplifier=10, min_area_size=10
     ):
         # the parameters are used to remove small size connected pixels outlier
         self.outlier_weight = outlier_weight
         self.outlier_bias = outlier_bias
         # the parameter is used to remove big size connected pixels outlier
-        self.amplfier = amplfier
+        self.amplifier = amplifier
         self.min_area_size = min_area_size
 
     def __str__(self) -> str:
@@ -45,8 +45,8 @@ class Extractor:
         s += "outlier_weight = {}\n".format(self.outlier_weight)
         s += "outlier_bias = {}\n".format(self.outlier_bias)
         s += "> small_outlier_size = outlier_weight * average_region_size + outlier_bias\n"
-        s += "amplfier = {}\n".format(self.amplfier)
-        s += "> large_outlier_size = amplfier * small_outlier_size\n"
+        s += "amplifier = {}\n".format(self.amplifier)
+        s += "> large_outlier_size = amplifier * small_outlier_size\n"
         s += "min_area_size = {} (pixels)\n".format(self.min_area_size)
         s += "> min_area_size is used to calculate average_region_size.\n"
         return s
@@ -69,7 +69,6 @@ class Extractor:
 
         total_pixels = 0
         nb_region = 0
-        average = 0.0
         for region in regionprops(labels):
             if region.area > self.min_area_size:
                 total_pixels += region.area
@@ -83,7 +82,7 @@ class Extractor:
 
             # big_size_outlier is used as a threshold value to remove pixels
             # are bigger than big_size_outlier
-            big_size_outlier = small_size_outlier * self.amplfier
+            big_size_outlier = small_size_outlier * self.amplifier
 
             # remove small pixels
             labeled_image = morphology.remove_small_objects(labels, small_size_outlier)

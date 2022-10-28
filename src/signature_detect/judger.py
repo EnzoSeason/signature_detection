@@ -1,5 +1,5 @@
-from typing import Any
 import numpy as np
+from typing import Any
 
 
 class Judger:
@@ -12,7 +12,7 @@ class Judger:
 
         low < max(h, w) / min(h, w) < high.
 
-        h, w are the heigth and width of the input mask.
+        h, w are the height and width of the input mask.
 
     - max_pixel_ratio: [low, high]
 

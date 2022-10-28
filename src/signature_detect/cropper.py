@@ -1,8 +1,8 @@
-import math
-from typing import Any
 import cv2
+import math
 import numpy as np
 from PIL import Image
+from typing import Any
 
 
 class Cropper:
@@ -71,7 +71,7 @@ class Cropper:
           img: numpy array
         Return:
           boxes: A numpy array of contours.
-          each items in the array is a contour (x, y, w, h)
+          each item in the array is a contour (x, y, w, h)
         """
         cnts = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         cnt = cnts[0] if len(cnts) == 2 else cnts[1]
@@ -86,7 +86,6 @@ class Cropper:
                 and h < copy_img.shape[0]
                 and w < copy_img.shape[1]
             ):
-
                 # cv2.rectangle(copy_img, (x, y), (x + w, y + h), (155, 155, 0), 1)
                 boxes.append([x, y, w, h])
 
@@ -99,9 +98,9 @@ class Cropper:
 
         return sorted_boxes
 
-    def is_intersected(self, new_box, orignal_box) -> bool:
+    def is_intersected(self, new_box, original_box) -> bool:
         [x_a, y_a, w_a, h_a] = new_box
-        [x_b, y_b, w_b, h_b] = orignal_box
+        [x_b, y_b, w_b, h_b] = original_box
 
         if y_a > y_b + h_b:
             return False
@@ -188,7 +187,7 @@ class Cropper:
 
     def run(self, np_image):
         """
-        read the signature extracted by Extractor, and crop it.
+        read the signature extracted by Extractor and crop it.
         """
 
         # find contours

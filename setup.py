@@ -24,5 +24,5 @@ setup(
         "opencv-python",
     ],
     extras_require={"dev": ["coverage>=5.5"]},
-    license = "MIT",
+    license="MIT",
 )

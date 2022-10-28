@@ -1,5 +1,4 @@
 import sys
-
 from signature_detect.cropper import Cropper
 from signature_detect.extractor import Extractor
 from signature_detect.loader import Loader
@@ -8,7 +7,7 @@ from signature_detect.judger import Judger
 
 def main(file_path: str) -> None:
     loader = Loader()
-    extractor = Extractor(amplfier=15)
+    extractor = Extractor(amplifier=15)
     cropper = Cropper()
     judger = Judger()
 
